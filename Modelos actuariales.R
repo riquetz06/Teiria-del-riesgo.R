@@ -202,22 +202,6 @@ from = 0, to = 10, n = 101)
 plot(R1)
 plot(R2, col = "green", add = TRUE)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #################
 # Convoluciones #
 #################
