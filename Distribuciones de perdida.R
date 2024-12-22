@@ -202,6 +202,24 @@ from = 0, to = 10, n = 101)
 plot(R1)
 plot(R2, col = "green", add = TRUE)
 
+#Loss Distributions for Actuaries Course
+lnClaims < - rlnorm(10000, meanlog = 2, sdlog = 0.5)
+expClaims < - rexp(10000, rate = 1)
+hist(lnClaims, main = "Histogtram of 10,000 Simulated Claims Values from  the Log Normal Distribution")
+hist(expClaims, main = "Histogtram of 10,000 Simulated Claims Values from  the Log Exponential Distribution")
+install.packages("MASS")
+library(MASS)
+fitdistr(lnClaims,"lognormal")
+fitdistr(lnClaims,"exponential")
+
+#Data Visualization
+set.seed(123)
+lnClaims<-rlnorm(10000, meanlog = 2, sdlog = 0.5)
+lnfit<-fitdistr(lnClaims, "lognormal")
+lnfitmean<-lnfit$estimate["meanlog"]
+lnfitsd<-lnfit$estimate["sdlog"]
+hist(lnClaims, main = "Lognormal Loss Distribution mean of 2 and sd 0.5", freq = FALSE)
+curve(dlnorm(x,lnfitmean,lnfitsd), add = TRUE, col = "red")
 
 
 
