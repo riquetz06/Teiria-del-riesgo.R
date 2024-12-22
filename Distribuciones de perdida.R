@@ -246,3 +246,28 @@ ggplot(datY, aes(x=loss))+geom_histogram(aes(y=..density..),binswidth=0.5, bins=
   geom_density(alpha=0.2,fill="#00FFFF")+geom_vline(aes(xintercept=mean(loss)),colour="red", linetype="dashed",size=1)+
   xlim(0,20)+ylim(0, 0.3)
 
+#Reinsurer Z
+ClaimsZwithZero<-pmax(ClaimsX-RetentionM,0)
+ClaimsZ<-ClaimsZwithZero[ClaimsZwithZero!=0]
+datZ<-data.frame(loss=ClaimsZ)
+head(datZ)
+ggplot(datZ, aes(x=loss))+geom_histogram(aes(y=..density..),binswidth=0.5, bins=50, colour ="black", fill="white")+
+  geom_density(alpha=0.2,fill="#00FFFF")+geom_vline(aes(xintercept=mean(loss)),colour="red", linetype="dashed",size=1)+
+  xlim(0,20)+ylim(0, 0.3)
+mean(ClaimsX)
+var(ClaimsX)
+mean(ClaimsY)
+var(ClaimsY)
+mean(ClaimsZ)
+var(ClaimsZ)
+
+
+
+
+
+
+
+
+
+
+
