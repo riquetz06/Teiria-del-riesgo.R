@@ -11,7 +11,7 @@ mydat=sqlFetch(data, "nombre hoja")
 odbcClose(data)
 mydat
 
-COMANDOS BÁSICOS PÁRA ANÁLISIS ESTADÍSTICO
+COMANDOS BÁSICOS PÁRA ANALISIS ESTADÍSTICO
 
 ejemplo<-scan()
 max(ejemplo)
