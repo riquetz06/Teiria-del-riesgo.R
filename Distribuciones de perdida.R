@@ -221,5 +221,34 @@ lnfitsd<-lnfit$estimate["sdlog"]
 hist(lnClaims, main = "Lognormal Loss Distribution mean of 2 and sd 0.5", freq = FALSE)
 curve(dlnorm(x,lnfitmean,lnfitsd), add = TRUE, col = "red")
 
+lnClaims2<-rlnorm(10000, meanlog = 2, sdlog = 0.5)
+lnfit2<-fitdistr(lnClaims2, "lognormal")
+lnfitmean2<-lnfit2$estimate["meanlog"]
+lnfitsd2<-lnfit2$estimate["sdlog"]
+hist(lnClaims2, main = "Lognormal Loss Distribution mean of 2 and sd 0.5", freq = FALSE)
+curve(dlnorm(x,lnfitmean2,lnfitsd2), add = TRUE, col = "red")  
+lines(density(lnClaims2), col="blue" )
+n=length(lnClaims2)
+qqplot(qlnorm(ppoints(n), lnfitmean2,lnfitsd2), lnClaims2, xlab="Theorical quantiles", ylab="Sample quantiles",
+       main ="Comparision of actual vs Fitted")
+abline(0,1)
 
+###############
+# Reinsurance #
+###############
+ClaimsX<-rlnorm(10000, meanlog = 2, sdlog = 0.5) #Synthetic data
+RetentionM = 15 # Retention Limit M = 15
+ClaimsY <- pmin(ClaimsX,RetentionM)
+library(ggplot2)
+datY<- data.frame(loss = n, ClaimsY)
+head(datY)
+ggplot(datY, aes(x=loss))+geom_histogram(aes(y=..density..),binwidth=0.5, bins=50, colour ="black", fill="white")+
+  geom_density(alpha=0.2,fill="#00FFFF")+geom_vline(aes(xintercept=mean(loss)),colour="red", linetype="dashed",size=1)+
+  xlim(0,20)+ylim(0, 0.3)
 
+ggplot(datY, aes(x=loss)) +
+  geom_histogram(aes(y=..density..), binwidth=0.5, colour="black", fill="white") +
+  geom_density(alpha=0.2, fill="#00FFFF") +
+  geom_vline(aes(xintercept=mean(loss, na.rm=TRUE)), colour="red", linetype="dashed", size=1) +
+  xlim(0, 20) +
+  ylim(0, 0.3)
