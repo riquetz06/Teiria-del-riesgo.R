@@ -261,8 +261,36 @@ var(ClaimsY)
 mean(ClaimsZ)
 var(ClaimsZ)
 
+#Límite de retención reaseguro
+# Cargar librerías necesarias
+if (!require(ggplot2)) install.packages("ggplot2")
+library(ggplot2)
 
+# Generar datos de ejemplo - Distribución de pérdidas (pérdidas simuladas)
+set.seed(123)
+losses <- rnorm(10000, mean = 1000, sd = 200)
 
+# Definir límite de retención
+retention_limit <- 1200
+
+# Calcular pérdidas retenidas y pérdidas cedidas
+retained_losses <- pmin(losses, retention_limit)
+ceded_losses <- pmax(losses - retention_limit, 0)
+
+# Crear un dataframe para visualizar los resultados
+df <- data.frame(losses, retained_losses, ceded_losses)
+
+# Visualizar la distribución de pérdidas originales y retenidas
+ggplot(df, aes(x = losses)) +
+  geom_histogram(aes(y = ..density..), binwidth = 50, fill = "blue", alpha = 0.5, color = "black") +
+  geom_histogram(aes(x = retained_losses, y = ..density..), binwidth = 50, fill = "green", alpha = 0.5, color = "black") +
+  geom_vline(aes(xintercept = retention_limit), colour = "red", linetype = "dashed", size = 1) +
+  labs(title = "Distribución de Pérdidas Originales y Retenidas",
+       x = "Pérdidas",
+       y = "Densidad") +
+  xlim(0, max(losses)) +
+  ylim(0, 0.0025) +
+  theme_minimal()
 
 
 
